@@ -2,10 +2,10 @@
 A place for me to experiment with ideas for systems and mechanics without needing to build a complete project
 
 ## List of Projects:
-- Galactic Pong
-- Neon Maze
-- Economy Sim
-- Engine Thing
+- [Galactic Pong](https://github.com/Harryonismyname/Playground#galactic-pong)
+- [Neon Maze](https://github.com/Harryonismyname/Playground#neon-maze)
+- [Economy Sim](https://github.com/Harryonismyname/Playground#economy-sim)
+- [Engine Thing](https://github.com/Harryonismyname/Playground#engine-thing)
 
 ## Galactic Pong
 [Play here](https://harryonismyname.itch.io/galactic-pong)
