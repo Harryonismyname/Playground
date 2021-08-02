@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapNode : GridNode<MapNode>
+public class MapNode : GridNode3D<MapNode>
 {
     private TileType state;
     private int productionValue;

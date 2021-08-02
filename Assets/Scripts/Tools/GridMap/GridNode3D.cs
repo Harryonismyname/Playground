@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridNode<TGridObject>
+public class GridNode3D<TGridObject>
 {
     public GridMap3D<TGridObject> Grid { get; private set; }
     public int x { get; private set; }
     public int y { get; private set; }
     public int z { get; private set; }
-    public GridNode(GridMap3D<TGridObject> grid, int x, int y, int z)
+    public GridNode3D(GridMap3D<TGridObject> grid, int x, int y, int z)
     {
         Grid = grid;
         this.x = x;
