@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GridNode<TGridObject>
 {
-    public GridMap<TGridObject> Grid { get; private set; }
+    public GridMap3D<TGridObject> Grid { get; private set; }
     public int x { get; private set; }
     public int y { get; private set; }
     public int z { get; private set; }
-    public GridNode(GridMap<TGridObject> grid, int x, int y, int z)
+    public GridNode(GridMap3D<TGridObject> grid, int x, int y, int z)
     {
         Grid = grid;
         this.x = x;

@@ -4,36 +4,67 @@ using UnityEngine;
 
 public static class GridTools<TGridObject>
 {
-
-    public static void GetXYZ(GridMap<TGridObject> grid, Vector3 worldPosition, out int x, out int y, out int z)
+    public static void GetXY(GridMap2D<TGridObject> grid, Vector3 worldPosition, Axis axis, out int x, out int y)
+    {
+        switch (axis)
+        {
+            case Axis.X:
+                {
+                    x = Mathf.FloorToInt(worldPosition.z / grid.cellSize);
+                    y = Mathf.FloorToInt(worldPosition.y / grid.cellSize);
+                    break;
+                }
+            case Axis.Y:
+                {
+                    x = Mathf.FloorToInt(worldPosition.x / grid.cellSize);
+                    y = Mathf.FloorToInt(worldPosition.z / grid.cellSize);
+                    break;
+                }
+            case Axis.Z:
+                {
+                    x = Mathf.FloorToInt(worldPosition.x / grid.cellSize);
+                    y = Mathf.FloorToInt(worldPosition.y / grid.cellSize);
+                    break;
+                }
+        }
+        x = 0;
+        y = 0;
+    }
+    public static void GetXYZ(GridMap3D<TGridObject> grid, Vector3 worldPosition, out int x, out int y, out int z)
     {
         x = Mathf.FloorToInt(worldPosition.x / grid.cellSize);
         y = Mathf.FloorToInt(worldPosition.y / grid.cellSize);
         z = Mathf.FloorToInt(worldPosition.z / grid.cellSize);
     }
-    public static bool IsValidCell(GridMap<TGridObject> grid, int x, int y, int z)
+
+    public static bool IsValidCell(GridMap2D<TGridObject> grid, int x, int y)
     {
-        if (x >= 0 && y >= 0 && x <= grid.Width - 1 && y <= grid.Height - 1 && z >= 0 && z <= grid.Depth)
-        {
-            return true;
-        }
+        if (x >= 0 && y >= 0 && x <= grid.Width - 1 && y <= grid.Height - 1) return true;
         else return false;
     }
-    public static bool IsValidCell(GridMap<TGridObject> grid, Vector3 location)
+    public static bool IsValidCell(GridMap2D<TGridObject> grid, Vector3 location)
+    {
+        GetXY(grid, location, grid.orientation, out int x, out int y);
+        return IsValidCell(grid, x, y);
+    }
+
+    public static bool IsValidCell(GridMap3D<TGridObject> grid, int x, int y, int z)
+    {
+        if (x >= 0 && y >= 0 && x <= grid.Width - 1 && y <= grid.Height - 1 && z >= 0 && z <= grid.Depth) return true;
+        else return false;
+    }
+    public static bool IsValidCell(GridMap3D<TGridObject> grid, Vector3 location)
     {
         GetXYZ(grid, location, out int x, out int y, out int z);
         return IsValidCell(grid, x, y, z);
     }
-    public static List<TGridObject> GetNeighborList(GridMap<TGridObject> grid, Vector3 nodePosition)
+    public static List<TGridObject> GetNeighborList(GridMap3D<TGridObject> grid, Vector3 nodePosition)
     {
         List<TGridObject> neighborList = new List<TGridObject>();
         GetXYZ(grid, nodePosition, out int x, out int y, out int z);
         TGridObject GetNode(int nodeX, int nodeY, int nodeZ)
         {
-            if (IsValidCell(grid, nodeX, nodeY, nodeZ))
-            {
-                return grid.GetGridObject(nodeX, nodeY, nodeZ);
-            }
+            if (IsValidCell(grid, nodeX, nodeY, nodeZ)) return grid.GetGridObject(nodeX, nodeY, nodeZ);
             else return default;
         }
         if (x - 1 >= 0)
@@ -81,7 +112,7 @@ public static class GridTools<TGridObject>
         }
         return neighborList;
     }
-    public static void DebugCell(GridMap<TGridObject> map, Vector3 location, Color color)
+    public static void DebugCell(GridMap3D<TGridObject> map, Vector3 location, Color color)
     {
         GridTools<TGridObject>.GetXYZ(map, location, out int x, out int y, out int z);
         Vector3 leftCorner = map.GetWorldPosition(x, y, z);
@@ -90,7 +121,7 @@ public static class GridTools<TGridObject>
         rightCorner.y += map.cellSize;
         Debug.DrawLine(leftCorner, rightCorner, color, 100f);
     }
-    public static void DebugCell(GridMap<TGridObject> map, int x, int y, Color color)
+    public static void DebugCell(GridMap3D<TGridObject> map, int x, int y, Color color)
     {
         Vector3 leftCorner = map.GetWorldPosition(x, y);
         Vector3 rightCorner = map.GetWorldPosition(x, y);

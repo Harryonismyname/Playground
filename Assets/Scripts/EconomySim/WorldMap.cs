@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldMap
 {
-    private GridMap<MapNode> grid;
+    private GridMap3D<MapNode> grid;
     private float settlementRadius = 1.5f;
     private int settlementRejectionSamples = 5;
 
@@ -12,12 +12,12 @@ public class WorldMap
 
     public class OnMapUpdateArgs : System.EventArgs
     {
-        public GridMap<MapNode> grid;
+        public GridMap3D<MapNode> grid;
     }
 
     public WorldMap(int width, int height, int depth)
     {
-        grid = new GridMap<MapNode>(height, width, 1f, Vector3.zero, (GridMap<MapNode> g, int x, int y, int z) => new MapNode(g, x, y, z), depth);
+        grid = new GridMap3D<MapNode>(height, width, 1f, Vector3.zero, (GridMap3D<MapNode> g, int x, int y, int z) => new MapNode(g, x, y, z), depth);
         GenerateMap();
     }
 
@@ -70,7 +70,7 @@ public class WorldMap
         return grid.Width;
     }
 
-    public GridMap<MapNode> GetGrid()
+    public GridMap3D<MapNode> GetGrid()
     {
         return grid;
     }

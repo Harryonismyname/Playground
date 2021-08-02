@@ -6,7 +6,7 @@ using System;
 // TODO: Create Base 2DGrid Class and then make a 3DGrid class that inherits from 2DGrid.
 // TODO: Clean up the cascading mess that will result from restructuring.
 
-public class GridMap<TGridObject>
+public class GridMap3D<TGridObject>
 {
     public int Height { get; }
     public int Width { get; }
@@ -16,7 +16,7 @@ public class GridMap<TGridObject>
     private TGridObject[,,] gridArray;
     public bool debugging = false;
 
-    public GridMap(int height, int width, float cellSize, Vector3 originPosition, Func<GridMap<TGridObject>, int, int, int, TGridObject> createGridObject, int depth = 1)
+    public GridMap3D(int height, int width, float cellSize, Vector3 originPosition, Func<GridMap3D<TGridObject>, int, int, int, TGridObject> createGridObject, int depth = 1)
     {
         Height = height;
         Width = width;

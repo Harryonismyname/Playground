@@ -22,7 +22,7 @@ public class MapVisual : MonoBehaviour
 
     [SerializeField] private MapSpriteUV[] mapSpriteUVArray;
 
-    private GridMap<MapNode> grid;
+    private GridMap3D<MapNode> grid;
     private WorldMap map;
     private Mesh mesh;
     private bool updateMesh;
@@ -61,7 +61,7 @@ public class MapVisual : MonoBehaviour
         }
         SetGrid(map.GetGrid());
     }
-    public void SetGrid(GridMap<MapNode> grid)
+    public void SetGrid(GridMap3D<MapNode> grid)
     {
         this.grid = grid;
         UpdateMeshVisual();

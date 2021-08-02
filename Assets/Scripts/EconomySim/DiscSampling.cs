@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class DiscSampling
 {
-    public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, GridMap<MapNode> worldMap, int numSamplesBeforeRejection = 30)
+    public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, GridMap3D<MapNode> worldMap, int numSamplesBeforeRejection = 30)
     {
-        GridMap<MapNode> map = worldMap;
+        GridMap3D<MapNode> map = worldMap;
         float cellSize = map.cellSize;
         int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];
         List<Vector2> points = new List<Vector2>();
@@ -42,7 +42,7 @@ public static class DiscSampling
         return points;
     }
 
-    static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float radius, List<Vector2> points, int[,] grid, GridMap<MapNode> map)
+    static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float radius, List<Vector2> points, int[,] grid, GridMap3D<MapNode> map)
     {
         if (candidate.x >= 0 && candidate.x < sampleRegionSize.x && candidate.y >= 0 && candidate.y < sampleRegionSize.y)
         {

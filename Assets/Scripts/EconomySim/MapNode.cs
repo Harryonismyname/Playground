@@ -42,7 +42,7 @@ public class MapNode : GridNode<MapNode>
         productionValue = defaultProductionValue;
         settlement = null;
     }
-    public MapNode(GridMap<MapNode> grid, int x, int y, int z) : base(grid, x, y, z)
+    public MapNode(GridMap3D<MapNode> grid, int x, int y, int z) : base(grid, x, y, z)
     {
         UpdateNode();
     }

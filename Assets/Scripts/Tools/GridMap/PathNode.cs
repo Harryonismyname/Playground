@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathNode
 {
-    private GridMap<PathNode> grid;
+    private GridMap3D<PathNode> grid;
     public int x;
     public int y;
 
@@ -13,7 +13,7 @@ public class PathNode
     public int fCost;
     public PathNode cameFromNode;
     public bool isWalkable;
-    public PathNode(GridMap<PathNode> grid, int x, int y)
+    public PathNode(GridMap3D<PathNode> grid, int x, int y)
     {
         this.grid = grid;
         this.x = x;

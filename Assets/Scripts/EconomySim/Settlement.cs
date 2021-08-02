@@ -9,7 +9,7 @@ public class Settlement
     private int wheatOnHand;
     private int stoneOnHand;
     private readonly MapNode parent;
-    private readonly GridMap<MapNode> parentGrid;
+    private readonly GridMap3D<MapNode> parentGrid;
     private bool improved;
     private int productionMultiplier;
     private int population;

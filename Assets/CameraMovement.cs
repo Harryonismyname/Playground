@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public GameRunner runner;
-    private GridMap<MapNode> map;
+    private GridMap3D<MapNode> map;
     private float xBound;
     private float yBound;
     private readonly float moveSpeed = 15f;

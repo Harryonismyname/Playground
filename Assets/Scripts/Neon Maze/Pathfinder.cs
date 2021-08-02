@@ -7,12 +7,12 @@ public class Pathfinder
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
 
-    private GridMap<PathNode> grid;
+    private GridMap3D<PathNode> grid;
     private List<PathNode> openList;
     private List<PathNode> closedList;
     public Pathfinder(int width, int height, Vector3 origin)
     {
-        grid = new GridMap<PathNode>(height, width, 1f, Vector3.zero, (GridMap<PathNode> g, int x, int y, int z) => new PathNode(g, x, y));
+        grid = new GridMap3D<PathNode>(height, width, 1f, Vector3.zero, (GridMap3D<PathNode> g, int x, int y, int z) => new PathNode(g, x, y));
         openList = new List<PathNode>();
         openList.Add(grid.GetGridObject(origin));
     }
@@ -217,7 +217,7 @@ public class Pathfinder
         }
         else return false;
     }
-    public GridMap<PathNode> GetGrid()
+    public GridMap3D<PathNode> GetGrid()
     {
         return grid;
     }

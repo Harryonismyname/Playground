@@ -12,7 +12,7 @@ public class EnemyAIPathfinder : MonoBehaviour
     private int i;
     public bool pathEnd;
     private Pathfinder pathfinder;
-    private GridMap<PathNode> grid;
+    private GridMap3D<PathNode> grid;
     private Tilemap map;
     private readonly float MOVESPEED = 1.5f;
     private Transform playerLocation;
