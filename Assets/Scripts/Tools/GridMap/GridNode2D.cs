@@ -8,11 +8,11 @@ public class GridNode2D<TGridObject>
     public int Y { get; private set; }
     public GridMap2D<TGridObject> Grid { get; }
 
-    public GridNode2D(int x, int y, GridMap2D<TGridObject> grid)
+    public GridNode2D(GridMap2D<TGridObject> grid, int x, int y)
     {
+        Grid = grid;
         X = x;
         Y = y;
-        Grid = grid;
     }
     public Vector3 GetWorldPosition()
     {
