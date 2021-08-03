@@ -5,18 +5,18 @@ using UnityEngine;
 public class GridNode3D<TGridObject>
 {
     public GridMap3D<TGridObject> Grid { get; private set; }
-    public int x { get; private set; }
-    public int y { get; private set; }
-    public int z { get; private set; }
+    public int X { get; private set; }
+    public int Y { get; private set; }
+    public int Z { get; private set; }
     public GridNode3D(GridMap3D<TGridObject> grid, int x, int y, int z)
     {
         Grid = grid;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        X = x;
+        Y = y;
+        Z = z;
     }
     public Vector3 GetWorldPosition()
     {
-        return Grid.GetCellCenterWorld(x, y, z);
+        return Grid.GetCellCenterWorld(X, Y, Z);
     }
 }
