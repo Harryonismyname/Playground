@@ -33,46 +33,25 @@ public static class GridTools3D<TGridObject>
         if (x - 1 >= 0)
         {
             // Left
-            if (IsValidCell(grid, x - 1, y, z))
-            {
-                neighborList.Add(GetNode(x - 1, y, z));
-            }
-            if (y - 1 >= 0) neighborList.Add(GetNode(x - 1, y - 1, z));
+            if (IsValidCell(grid, x - 1, y, z)) neighborList.Add(GetNode(x - 1, y, z));
             // Left Down
-            if (y + 1 < grid.Height) neighborList.Add(GetNode(x - 1, y + 1, z));
+            if (y - 1 >= 0 && IsValidCell(grid, x - 1, y - 1, z)) neighborList.Add(GetNode(x - 1, y - 1, z));
             // Left Up
-
+            if (y + 1 < grid.Height && IsValidCell(grid, x - 1, y + 1, z)) neighborList.Add(GetNode(x - 1, y + 1, z));
         }
         if (x + 1 < grid.Width)
         {
             // Right
-            if (IsValidCell(grid, x + 1, y, z))
-            {
-                neighborList.Add(GetNode(x + 1, y, z));
-            }
-            if (y - 1 >= 0) neighborList.Add(GetNode(x + 1, y - 1, z));
+            if (IsValidCell(grid, x + 1, y, z)) neighborList.Add(GetNode(x + 1, y, z));
             // Right Down
-            if (y + 1 < grid.Height) neighborList.Add(GetNode(x + 1, y + 1, z));
+            if (y - 1 >= 0 && IsValidCell(grid, x + 1, y - 1, z)) neighborList.Add(GetNode(x + 1, y - 1, z));
             // Right Up
+            if (y + 1 < grid.Height && IsValidCell(grid, x + 1, y + 1, z)) neighborList.Add(GetNode(x + 1, y + 1, z));
         }
         // Down
-
-        if (y - 1 >= 0)
-        {
-            if (IsValidCell(grid, x, y - 1, z))
-            {
-                neighborList.Add(GetNode(x, y - 1, z));
-            }
-
-        }
+        if (y - 1 >= 0 && IsValidCell(grid, x, y - 1, z)) neighborList.Add(GetNode(x, y - 1, z));
         // Up
-        if (y + 1 < grid.Height)
-        {
-            if (IsValidCell(grid, x, y + 1, z))
-            {
-                neighborList.Add(GetNode(x, y + 1, z));
-            }
-        }
+        if (y + 1 < grid.Height && IsValidCell(grid, x, y + 1, z)) neighborList.Add(GetNode(x, y + 1, z));
         return neighborList;
     }
     public static void DebugCell(GridMap3D<TGridObject> map, Vector3 location, Color color)
