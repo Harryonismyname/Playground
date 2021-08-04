@@ -9,7 +9,7 @@ public class ScreenScale : MonoBehaviour
     {
         Resize();
     }
-
+    /// <summary>Sets the screen width to fit in rendered window</summary>
     void Resize()
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();

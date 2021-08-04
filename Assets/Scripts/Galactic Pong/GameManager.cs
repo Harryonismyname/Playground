@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             {
                 EndGame();
             }
-            if (ballHandler.BallCheck()== 1)
+            if (ballHandler.BallCheck() == 1)
             {
                 scoreHandler.Score(true);
                 UIHandler.UpdateScoreDisplay(scoreHandler.playerScore, scoreHandler.opponentScore);
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
         if (!gameRunning)
         {
             gameEnd = false;
-            if (ballHandler.BallCheck()==1 || ballHandler.BallCheck()==2)
+            if (ballHandler.BallCheck() == 1 || ballHandler.BallCheck() == 2)
             {
                 ballHandler.ResetBall();
             }
@@ -74,12 +74,12 @@ public class GameManager : MonoBehaviour
         UIHandler.Main();
         ballHandler.ResetBall();
     }
-
-    public void StartGame(int difficulty=0)
+    /// <summary>Begins core gameplay loop at the passed difficulty value</summary>
+    public void StartGame(int difficulty = 0)
     {
         ballHandler.DestroyBall();
         gameStart = true;
-        if (difficulty>0)
+        if (difficulty > 0)
         {
             gameDifficulty = difficulty;
         }
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
         gameRunning = true;
         ballHandler.CreateBall();
     }
-
+    /// <summary>Ends all gameplay based processes</summary>
     private void EndGame()
     {
         gameEnd = true;
@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
         UIHandler.DeclareWinner(scoreHandler.DetermineVictor());
         ballHandler.ResetBall();
     }
+    /// <summary>Toggles the game between paused and un-paused</summary>
     public void TogglePause()
     {
         isPaused = !isPaused;

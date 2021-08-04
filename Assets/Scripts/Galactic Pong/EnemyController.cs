@@ -107,7 +107,7 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
+    /// <summary>Checks enemy position and restricts movement beyond Y boundaries</summary>
     private void Constrain()
     {
         if (transform.position.y > yBounds)
@@ -125,6 +125,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(GenerateOffset(10));
         aiStarted = true;
     }
+    /// <summary>Finds ball Yposition and sets enemy Yposition to equal the ball's Yposition plus a randomly generated offset</summary>
     private void EasyAI()
     {
         ballPos = ballHandler.ball.transform.position.y;
@@ -148,7 +149,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(GenerateOffset(5));
         aiStarted = true;
     }
-
+    /// <summary>Finds ball Yposition and moves enemy to a Yposition equal the Yposition plus a randomly generated offset and doubles movement speed if distance is double the Yposition of the enemy</summary>
     private void NormalAI()
     {
         ballPos = ballHandler.ball.transform.position.y;
@@ -187,7 +188,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(GenerateOffset(3));
         aiStarted = true;
     }
-
+    /// <summary>Finds ball Yposition and moves enemy to a Yposition equal the Yposition plus a randomly generated offset and doubles movement speed if distance is double the Yposition of the enemy</summary>
     private void HardAI()
     {
         ballPos = ballHandler.ball.transform.position.y;
@@ -221,6 +222,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Impossible AI Functions
+    /// <summary>Finds ball Yposition and moves enemy to a Yposition equal the Yposition</summary>
     private void ImpossibleAI()
     {
         if (ballBod.velocity.x > 0)
@@ -238,6 +240,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Offset Generation
+    /// <summary>Continually generates a new offset based on provided range</summary>
     IEnumerator GenerateOffset(int range)
     {
         while (true)

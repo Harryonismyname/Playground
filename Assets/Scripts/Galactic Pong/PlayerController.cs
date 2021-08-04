@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D ballBod;
     private void Start()
     {
-        yBounds = GameObject.Find("BG").GetComponent<SpriteRenderer>().size.y/2 - GetComponent<SpriteRenderer>().size.y/2;
+        yBounds = GameObject.Find("BG").GetComponent<SpriteRenderer>().size.y / 2 - GetComponent<SpriteRenderer>().size.y / 2;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         ballHandler = GameObject.Find("BallHandler").GetComponent<BallHandler>();
     }
@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    /// <summary>Restricts player movement to within the local Y boundaries</summary>
     private void Constrain()
     {
         if (transform.position.y > yBounds)

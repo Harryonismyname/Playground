@@ -27,6 +27,7 @@ public class BallHandler : MonoBehaviour
         DestroyBall();
         CreateBall();
     }
+    /// <summary>Checks ball position and returns a value if out of bounds</summary>
     public int BallCheck()
     {
         if (ball.transform.position.x > 16)
