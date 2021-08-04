@@ -29,31 +29,31 @@ public class GridMap2D<TGridObject>
     // Setters
     public void SetGridObject(int x, int y, TGridObject value)
     {
-        if (GridTools<TGridObject>.IsValidCell(this, x, y))
+        if (GridTools2D<TGridObject>.IsValidCell(this, x, y))
         {
             gridArray[x, y] = value;
         }
     }
     public void SetGridObject(Vector3 worldPosition, TGridObject value)
     {
-        GridTools<TGridObject>.GetXY(this, worldPosition, orientation, out int x, out int y);
+        GridTools2D<TGridObject>.GetXY(this, worldPosition, orientation, out int x, out int y);
         SetGridObject(x, y, value);
     }
     // Getters
     public TGridObject GetGridObject(int x, int y)
     {
-        return GridTools<TGridObject>.IsValidCell(this, x, y) ? gridArray[x, y] : default;
+        return GridTools2D<TGridObject>.IsValidCell(this, x, y) ? gridArray[x, y] : default;
     }
     public TGridObject GetGridObject(Vector3 worldPosition)
     {
-        GridTools<TGridObject>.GetXY(this, worldPosition, orientation, out int x, out int y);
+        GridTools2D<TGridObject>.GetXY(this, worldPosition, orientation, out int x, out int y);
         return GetGridObject(x, y);
     }
 
 
     public Vector3 GetCellCenterWorld(Vector3 position)
     {
-        GridTools<TGridObject>.GetXY(this, position, orientation, out int x, out int y);
+        GridTools2D<TGridObject>.GetXY(this, position, orientation, out int x, out int y);
         Vector3 location = GetCellCenter(GetWorldPosition(x, y));
         return location;
     }
@@ -66,7 +66,7 @@ public class GridMap2D<TGridObject>
 
     private Vector3 GetCellCenter(Vector3 location)
     {
-        if (GridTools<TGridObject>.IsValidCell(this, location))
+        if (GridTools2D<TGridObject>.IsValidCell(this, location))
         {
             switch (orientation)
             {
