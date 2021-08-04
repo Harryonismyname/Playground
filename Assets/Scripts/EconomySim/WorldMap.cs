@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WorldMap
 {
-    private GridMap3D<MapNode> grid;
+    public bool debugging = false;
+    public GridMap2D<MapNode> Grid { get; private set; }
     private float settlementRadius = 1.5f;
     private int settlementRejectionSamples = 5;
 
@@ -12,48 +13,44 @@ public class WorldMap
 
     public class OnMapUpdateArgs : System.EventArgs
     {
-        public GridMap3D<MapNode> grid;
+        public GridMap2D<MapNode> Grid;
     }
 
     public WorldMap(int width, int height, int depth)
     {
-        grid = new GridMap3D<MapNode>(height, width, 1f, Vector3.zero, (GridMap3D<MapNode> g, int x, int y, int z) => new MapNode(g, x, y, z), depth);
+        Grid = new GridMap2D<MapNode>(height, width, 1f, Axis.Z, Vector3.zero, (GridMap2D<MapNode> g, int x, int y) => new MapNode(g, x, y));
         GenerateMap();
     }
 
     public void GenerateMap()
     {
-        for (int x = 0; x < grid.Width; x++)
+        for (int x = 0; x < Grid.Width; x++)
         {
-            for (int y = 0; y < grid.Height; y++)
+            for (int y = 0; y < Grid.Height; y++)
             {
-                for (int z = 0; z < grid.Depth; z++)
+                SetProduct(x, y, Tools.RandomEnum<TileType>());
+                if (debugging)
                 {
-                    TileType newNode = Tools.RandomEnum<TileType>();
-                    SetProduct(x, y, z, newNode);
-                    if (grid.debugging)
+                    if (GetNode(x, y).GetState() == TileType.Wood)
                     {
-                        if (GetNode(x, y, z).GetState() == TileType.Wood)
-                        {
-                            GridTools<MapNode>.DebugCell(grid, x, y, Color.green);
-                        }
-                        else if (GetNode(x, y, z).GetState() == TileType.Stone)
-                        {
-                            GridTools<MapNode>.DebugCell(grid, x, y, Color.grey);
-                        }
-                        else if (GetNode(x, y, z).GetState() == TileType.Wheat)
-                        {
-                            GridTools<MapNode>.DebugCell(grid, x, y, Color.yellow);
-                        }
-                        else if (GetNode(x, y, z).GetState() == TileType.Wool)
-                        {
-                            GridTools<MapNode>.DebugCell(grid, x, y, Color.white);
-                        }
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.green);
+                    }
+                    else if (GetNode(x, y).GetState() == TileType.Stone)
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.grey);
+                    }
+                    else if (GetNode(x, y).GetState() == TileType.Wheat)
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.yellow);
+                    }
+                    else if (GetNode(x, y).GetState() == TileType.Wool)
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.white);
                     }
                 }
             }
         }
-        List<Vector2> settlementSpawnPoints = DiscSampling.GeneratePoints(settlementRadius, new Vector2(grid.Width, grid.Height), grid, settlementRejectionSamples);
+        List<Vector2> settlementSpawnPoints = DiscSampling.GeneratePoints(settlementRadius, new Vector2(GetWidth(), GetHeight()), Grid, settlementRejectionSamples);
         foreach (Vector2 point in settlementSpawnPoints)
         {
             PlaceSettlement(point);
@@ -62,92 +59,80 @@ public class WorldMap
 
     public int GetHeight()
     {
-        return grid.Height;
+        return Grid.Height;
     }
 
     public int GetWidth()
     {
-        return grid.Width;
+        return Grid.Width;
     }
-
-    public GridMap3D<MapNode> GetGrid()
+    public void SetProduct(int x, int y, TileType product)
     {
-        return grid;
-    }
-    public void SetProduct(int x, int y, int z, TileType product)
-    {
-        grid.GetGridObject(x, y, z).SetProduct(product);
-        if (grid.debugging)
+        GetNode(x, y).SetProduct(product);
+        if (debugging)
         {
-            if (GetNode(x, y, z).GetState() == TileType.Wood)
+            switch (GetNode(x, y).GetState())
             {
-                GridTools<MapNode>.DebugCell(grid, x, y, Color.green);
-            }
-            else if (GetNode(x, y, z).GetState() == TileType.Stone)
-            {
-                GridTools<MapNode>.DebugCell(grid, x, y, Color.grey);
-            }
-            else if (GetNode(x, y, z).GetState() == TileType.Wheat)
-            {
-                GridTools<MapNode>.DebugCell(grid, x, y, Color.yellow);
-            }
-            else if (GetNode(x, y, z).GetState() == TileType.Wool)
-            {
-                GridTools<MapNode>.DebugCell(grid, x, y, Color.white);
+                case TileType.Wood:
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.green);
+                        break;
+                    }
+                case TileType.Stone:
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.grey);
+                        break;
+                    }
+                case TileType.Wheat:
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.yellow);
+                        break;
+                    }
+                case TileType.Wool:
+                    {
+                        GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.white);
+                        break;
+                    }
             }
         }
-
-        OnMapUpdate?.Invoke(this, new OnMapUpdateArgs { grid = grid });
+        OnMapUpdate?.Invoke(this, new OnMapUpdateArgs { Grid = Grid });
     }
     public void SetProduct(Vector3 position, TileType product)
     {
-        GridTools<MapNode>.GetXYZ(grid, position, out int x, out int y, out int z);
-        SetProduct(x, y, z, product);
+        GridTools2D<MapNode>.GetXY(Grid, position, Grid.orientation, out int x, out int y);
+        SetProduct(x, y, product);
     }
 
     public void PlaceSettlement(Vector3 location)
     {
-        if (GridTools<MapNode>.IsValidCell(grid, location) && grid.GetGridObject(location) != null)
+        if (GridTools2D<MapNode>.IsValidCell(Grid, location) && Tools.NullCheck(GetNode(location)))
         {
-            GridTools<MapNode>.GetXYZ(grid, location, out int x, out int y, out int z);
-            grid.GetGridObject(x, y).SetNodeAsSettlement();
-            if (grid.debugging)
-            {
-                if (grid.GetGridObject(x, y) != null)
-                {
-                    GridTools<MapNode>.DebugCell(grid, location, Color.black);
-                }
-            }
+            GetNode(location).SetNodeAsSettlement();
+            if (debugging) GridTools2D<MapNode>.DebugCell(Grid, location, Color.black);
         }
     }
-    public void PlaceSettlement(int x, int y, int z)
+    public void PlaceSettlement(int x, int y)
     {
-        if (GridTools<MapNode>.IsValidCell(grid, x, y, z) && grid.GetGridObject(x, y) != null)
+        if (GridTools2D<MapNode>.IsValidCell(Grid, x, y) && Tools.NullCheck(GetNode(x, y)))
         {
-            grid.GetGridObject(x, y).SetNodeAsSettlement();
-            if (grid.debugging)
-            {
-                if (Tools.NullCheck(grid.GetGridObject(x, y)))
-                {
-                    GridTools<MapNode>.DebugCell(grid, x, y, Color.black);
-                }
-            }
+            GetNode(x, y).SetNodeAsSettlement();
+            if (debugging) GridTools2D<MapNode>.DebugCell(Grid, x, y, Color.black);
         }
     }
-    public MapNode GetNode(int x, int y, int z = 0)
+    public MapNode GetNode(int x, int y)
     {
-        if (GridTools<MapNode>.IsValidCell(grid, x, y, z))
+        if (GridTools2D<MapNode>.IsValidCell(Grid, x, y))
         {
-            return grid.GetGridObject(x, y, z);
+            return Grid.GetGridObject(x, y);
         }
         else return null;
     }
     public MapNode GetNode(Vector3 location)
     {
-        if (GridTools<MapNode>.IsValidCell(grid, location))
+        if (GridTools2D<MapNode>.IsValidCell(Grid, location))
         {
-            GridTools<MapNode>.GetXYZ(grid, location, out int x, out int y, out int z);
-            return grid.GetGridObject(x, y, z);
+            GridTools2D<MapNode>.GetXY(Grid, location, Grid.orientation, out int x, out int y);
+            return Grid.GetGridObject(x, y);
         }
         else return null;
     }

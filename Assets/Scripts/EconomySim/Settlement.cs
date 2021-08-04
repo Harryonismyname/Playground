@@ -9,7 +9,7 @@ public class Settlement
     private int wheatOnHand;
     private int stoneOnHand;
     private readonly MapNode parent;
-    private readonly GridMap3D<MapNode> parentGrid;
+    private readonly GridMap2D<MapNode> parentGrid;
     private bool improved;
     private int productionMultiplier;
     private int population;
@@ -60,7 +60,7 @@ public class Settlement
 
     public void GatherRescources()
     {
-        List<MapNode> neighborList = GridTools<MapNode>.GetNeighborList(parentGrid, parent.GetWorldPosition());
+        List<MapNode> neighborList = GridTools2D<MapNode>.GetNeighborList(parentGrid, parent.GetWorldPosition());
         foreach (MapNode node in neighborList)
         {
             switch (node.GetState())
