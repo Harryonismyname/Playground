@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Custom Node for use in GridMap2D</summary>
 public class GridNode2D<TGridObject>
 {
     public int X { get; private set; }
