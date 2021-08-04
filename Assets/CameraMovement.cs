@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public GameRunner runner;
-    private GridMap3D<MapNode> map;
+    private GridMap2D<MapNode> map;
     private float xBound;
     private float yBound;
     private readonly float moveSpeed = 15f;
@@ -16,7 +16,7 @@ public class CameraMovement : MonoBehaviour
         {
             if (Tools.NullCheck(runner.map))
             {
-                map = runner.map.GetGrid();
+                map = runner.map.Grid;
                 xBound = map.Width;
                 yBound = map.Height;
             }

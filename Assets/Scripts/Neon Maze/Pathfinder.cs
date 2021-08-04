@@ -7,12 +7,12 @@ public class Pathfinder
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
 
-    private GridMap3D<PathNode> grid;
+    private GridMap2D<PathNode> grid;
     private List<PathNode> openList;
     private List<PathNode> closedList;
     public Pathfinder(int width, int height, Vector3 origin)
     {
-        grid = new GridMap3D<PathNode>(height, width, 1f, Vector3.zero, (GridMap3D<PathNode> g, int x, int y, int z) => new PathNode(g, x, y));
+        grid = new GridMap2D<PathNode>(height, width, 1f, Axis.Z, Vector3.zero, (GridMap2D<PathNode> g, int x, int y) => new PathNode(g, x, y));
         openList = new List<PathNode>();
         openList.Add(grid.GetGridObject(origin));
     }
@@ -21,8 +21,8 @@ public class Pathfinder
     {
         target.z = 0;
         List<Vector3> worldPath = new List<Vector3>();
-        GridTools<PathNode>.GetXYZ(grid, origin, out int Ox, out int Oy, out int Oz);
-        GridTools<PathNode>.GetXYZ(grid, target, out int Tx, out int Ty, out int Tz);
+        GridTools2D<PathNode>.GetXY(grid, origin, grid.orientation, out int Ox, out int Oy);
+        GridTools2D<PathNode>.GetXY(grid, target, grid.orientation, out int Tx, out int Ty);
         List<PathNode> path = FindPath(Ox, Oy, Tx, Ty);
         if (path != null)
         {
@@ -217,7 +217,7 @@ public class Pathfinder
         }
         else return false;
     }
-    public GridMap3D<PathNode> GetGrid()
+    public GridMap2D<PathNode> GetGrid()
     {
         return grid;
     }

@@ -12,7 +12,7 @@ public class EnemyAIPathfinder : MonoBehaviour
     private int i;
     public bool pathEnd;
     private Pathfinder pathfinder;
-    private GridMap3D<PathNode> grid;
+    private GridMap2D<PathNode> grid;
     private Tilemap map;
     private readonly float MOVESPEED = 1.5f;
     private Transform playerLocation;
@@ -26,7 +26,7 @@ public class EnemyAIPathfinder : MonoBehaviour
             if (map.HasTile(position))
             {
                 Vector3 cellPos = map.GetCellCenterWorld(position);
-                GridTools<PathNode>.GetXYZ(grid, cellPos, out int x, out int y, out int z);
+                GridTools2D<PathNode>.GetXY(grid, cellPos, grid.orientation, out int x, out int y);
                 if (pathfinder.NullNodeCheck(x, y))
                 {
                     pathfinder.GetNode(x, y).isWalkable = false;
