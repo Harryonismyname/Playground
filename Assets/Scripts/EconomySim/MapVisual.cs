@@ -22,14 +22,14 @@ public class MapVisual : MonoBehaviour
 
     [SerializeField] private MapSpriteUV[] mapSpriteUVArray;
 
-    private GridMap3D<MapNode> grid;
+    private GridMap2D<MapNode> grid;
     private WorldMap map;
     private Mesh mesh;
     private bool updateMesh;
     private bool subscribed = false;
     private void Map_OnMapUpdate(object sender, WorldMap.OnMapUpdateArgs e)
     {
-        SetGrid(e.grid);
+        SetGrid(e.Grid);
     }
 
     private void Awake()
@@ -59,9 +59,9 @@ public class MapVisual : MonoBehaviour
             this.map.OnMapUpdate += Map_OnMapUpdate;
             subscribed = true;
         }
-        SetGrid(map.GetGrid());
+        SetGrid(map.Grid);
     }
-    public void SetGrid(GridMap3D<MapNode> grid)
+    public void SetGrid(GridMap2D<MapNode> grid)
     {
         this.grid = grid;
         UpdateMeshVisual();
@@ -76,26 +76,23 @@ public class MapVisual : MonoBehaviour
         {
             for (int y = 0; y < grid.Height; y++)
             {
-                for (int z = 0; z < grid.Depth; z++)
+                int index = x * grid.Height + y;
+                Vector3 quadSize = new Vector3(1, 1) * grid.cellSize;
+                MapNode node = map.GetNode(x, y);
+                Vector2 gridUV00, gridUV11;
+                if (node.GetState() == TileType.None)
                 {
-                    int index = x * grid.Height + y;
-                    Vector3 quadSize = new Vector3(1, 1) * grid.cellSize;
-                    MapNode node = map.GetNode(x, y, z);
-                    Vector2 gridUV00, gridUV11;
-                    if (node.GetState() == TileType.None)
-                    {
-                        gridUV00 = Vector2.zero;
-                        gridUV11 = Vector2.zero;
-                        quadSize = Vector3.zero;
-                    }
-                    else
-                    {
-                        UVCoords uvCoords = uvCoordsDictionary[node.GetState()];
-                        gridUV00 = uvCoords.uv00;
-                        gridUV11 = uvCoords.uv11;
-                    }
-                    Tools.AddToMeshArrays(vertices, uvs, triangles, index, grid.GetCellCenterWorld(x, y), 0f, quadSize, gridUV00, gridUV11);
+                    gridUV00 = Vector2.zero;
+                    gridUV11 = Vector2.zero;
+                    quadSize = Vector3.zero;
                 }
+                else
+                {
+                    UVCoords uvCoords = uvCoordsDictionary[node.GetState()];
+                    gridUV00 = uvCoords.uv00;
+                    gridUV11 = uvCoords.uv11;
+                }
+                Tools.AddToMeshArrays(vertices, uvs, triangles, index, grid.GetCellCenterWorld(x, y), 0f, quadSize, gridUV00, gridUV11);
             }
         }
 

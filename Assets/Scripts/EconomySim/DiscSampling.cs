@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class DiscSampling
 {
-    public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, GridMap3D<MapNode> worldMap, int numSamplesBeforeRejection = 30)
+    public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, GridMap2D<MapNode> worldMap, int numSamplesBeforeRejection = 30)
     {
-        GridMap3D<MapNode> map = worldMap;
+        GridMap2D<MapNode> map = worldMap;
         float cellSize = map.cellSize;
         int[,] grid = new int[Mathf.CeilToInt(sampleRegionSize.x / cellSize), Mathf.CeilToInt(sampleRegionSize.y / cellSize)];
         List<Vector2> points = new List<Vector2>();
@@ -28,7 +28,7 @@ public static class DiscSampling
                 {
                     points.Add(candidate);
                     spawnPoints.Add(candidate);
-                    GridTools<MapNode>.GetXYZ(map, candidate, out int x, out int y, out int z);
+                    GridTools2D<MapNode>.GetXY(map, candidate, map.orientation, out int x, out int y);
                     grid[x, y] = points.Count;
                     candidateAccepted = true;
                     break;
@@ -42,11 +42,11 @@ public static class DiscSampling
         return points;
     }
 
-    static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float radius, List<Vector2> points, int[,] grid, GridMap3D<MapNode> map)
+    static bool IsValid(Vector2 candidate, Vector2 sampleRegionSize, float radius, List<Vector2> points, int[,] grid, GridMap2D<MapNode> map)
     {
         if (candidate.x >= 0 && candidate.x < sampleRegionSize.x && candidate.y >= 0 && candidate.y < sampleRegionSize.y)
         {
-            GridTools<MapNode>.GetXYZ(map, candidate, out int x, out int y, out int z);
+            GridTools2D<MapNode>.GetXY(map, candidate, map.orientation, out int x, out int y);
             int cellX = x;
             int cellY = y;
             int searchStartX = Mathf.Max(0, cellX - 2);

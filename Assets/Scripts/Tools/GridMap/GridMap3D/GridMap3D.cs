@@ -53,20 +53,20 @@ public class GridMap3D<TGridObject>
     // Setters
     public void SetGridObject(int x, int y, TGridObject value, int z = 0)
     {
-        if (GridTools<TGridObject>.IsValidCell(this, x, y, z))
+        if (GridTools3D<TGridObject>.IsValidCell(this, x, y, z))
         {
             gridArray[x, y, z] = value;
         }
     }
     public void SetGridObject(Vector3 worldPosition, TGridObject value)
     {
-        GridTools<TGridObject>.GetXYZ(this, worldPosition, out int x, out int y, out int z);
+        GridTools3D<TGridObject>.GetXYZ(this, worldPosition, out int x, out int y, out int z);
         SetGridObject(x, y, value, z);
     }
     // Getters
     public TGridObject GetGridObject(int x, int y, int z = 0)
     {
-        if (GridTools<TGridObject>.IsValidCell(this, x, y, z))
+        if (GridTools3D<TGridObject>.IsValidCell(this, x, y, z))
         {
             return gridArray[x, y, z];
         }
@@ -77,14 +77,14 @@ public class GridMap3D<TGridObject>
     }
     public TGridObject GetGridObject(Vector3 worldPosition)
     {
-        GridTools<TGridObject>.GetXYZ(this, worldPosition, out int x, out int y, out int z);
+        GridTools3D<TGridObject>.GetXYZ(this, worldPosition, out int x, out int y, out int z);
         return GetGridObject(x, y, z);
     }
 
 
     public Vector3 GetCellCenterWorld(Vector3 position)
     {
-        GridTools<TGridObject>.GetXYZ(this, position, out int x, out int y, out int z);
+        GridTools3D<TGridObject>.GetXYZ(this, position, out int x, out int y, out int z);
         Vector3 location = GetCellCenter(GetWorldPosition(x, y));
         return location;
     }

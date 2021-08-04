@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapNode : GridNode3D<MapNode>
+public class MapNode : GridNode2D<MapNode>
 {
     private TileType state;
-    private int productionValue;
-    public int ProductionValue { get { return productionValue; } }
+    public int ProductionValue { get; private set; }
     private readonly int defaultProductionValue = 10;
     private Settlement settlement;
 
@@ -15,7 +14,7 @@ public class MapNode : GridNode3D<MapNode>
         switch (state)
         {
             case TileType.None:
-                productionValue = 0;
+                ProductionValue = 0;
                 settlement = null;
                 break;
             case TileType.Wood:
@@ -32,17 +31,17 @@ public class MapNode : GridNode3D<MapNode>
                 break;
             case TileType.Settlement:
                 settlement = new Settlement(this);
-                productionValue = 0;
+                ProductionValue = 0;
                 break;
         }
     }
 
     private void SetDefaultProduct()
     {
-        productionValue = defaultProductionValue;
+        ProductionValue = defaultProductionValue;
         settlement = null;
     }
-    public MapNode(GridMap3D<MapNode> grid, int x, int y, int z) : base(grid, x, y, z)
+    public MapNode(GridMap2D<MapNode> grid, int x, int y) : base(grid, x, y)
     {
         UpdateNode();
     }
