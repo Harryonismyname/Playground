@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Generates custom mesh based on TileType of the attached grid</summary>
 public class MapVisual : MonoBehaviour
 {
     [System.Serializable]
