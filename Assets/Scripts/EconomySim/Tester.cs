@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Defunct Class</summary>
 public class Tester : MonoBehaviour
 {
     public int height;
