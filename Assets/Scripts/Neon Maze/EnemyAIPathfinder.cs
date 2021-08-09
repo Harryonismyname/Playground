@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+/// <summary>Custom Behaviour Class for moving enemies toward the player if in sight otherwise wander around</summary>
 public class EnemyAIPathfinder : MonoBehaviour
 {
 
