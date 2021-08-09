@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+///<summary>Custom Node for storing data inside GridMap3D</summary>
 public class GridNode3D<TGridObject>
 {
     public GridMap3D<TGridObject> Grid { get; private set; }
