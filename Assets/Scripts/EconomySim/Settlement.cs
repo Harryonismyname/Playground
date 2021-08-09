@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Special Tile Type that collects and stores values based on neighboring nodes</summary>
 public class Settlement
 {
     private int woodOnHand;
@@ -27,6 +27,7 @@ public class Settlement
         population = 10;
     }
 
+    ///<summary>Returns local onhands</summary>
     public Dictionary<TileType, int> YieldRescources()
     {
         Dictionary<TileType, int> products = new Dictionary<TileType, int>
@@ -38,7 +39,7 @@ public class Settlement
         };
         return products;
     }
-
+    ///<summary>Reduces local onhands of passed rescource by passed amount</summary> 
     private void ConsumeRescource(TileType rescource, int amount)
     {
         switch (rescource)
@@ -57,7 +58,7 @@ public class Settlement
                 break;
         }
     }
-
+    ///<summary>Updates local onhands based on adjacent map tiles</summary> 
     public void GatherRescources()
     {
         List<MapNode> neighborList = GridTools2D<MapNode>.GetNeighborList(parentGrid, parent.GetWorldPosition());
@@ -80,7 +81,7 @@ public class Settlement
             }
         }
     }
-
+    ///<summary>Reduces local onhands based on population</summary> 
     public void PopulationConsumption()
     {
         if (woodOnHand != 0)
@@ -100,7 +101,7 @@ public class Settlement
             ConsumeRescource(TileType.Stone, population);
         }
     }
-
+    ///<summary>Updates production capacity of Settlment once predefined cost for improvement has been achieved</summary> 
     public void ImproveSettlement()
     {
         if (!improved)
