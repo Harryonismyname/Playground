@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Custom Behaviour Script to control movement</summary>
 public class EnemyMover : MonoBehaviour
 {
     private enum State
@@ -35,14 +35,14 @@ public class EnemyMover : MonoBehaviour
                     roamingPosition = GetRoamingPosition();
                     pathfinder.GeneratePathTo(roamingPosition);
                 }
-                if(Vector3.Distance(transform.position, player.transform.position) < 5f)
+                if (Vector3.Distance(transform.position, player.transform.position) < 5f)
                 {
                     pathfinder.FollowPlayer();
                     state = State.Hunting;
                 }
                 break;
             case State.Hunting:
-                if(Vector3.Distance(transform.position, player.transform.position) > 5f)
+                if (Vector3.Distance(transform.position, player.transform.position) > 5f)
                 {
                     pathfinder.LostPlayer();
                     state = State.Roaming;
