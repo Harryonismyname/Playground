@@ -16,7 +16,7 @@ public class Pathfinder
         openList = new List<PathNode>();
         openList.Add(grid.GetGridObject(origin));
     }
-
+    /// <summary>Returns a list of Vector3 locations that form a path using A* pathfinding Algorithm from origin position to target position</summary>
     public List<Vector3> Pathfind(Vector3 origin, Vector3 target)
     {
         target.z = 0;
@@ -42,7 +42,7 @@ public class Pathfinder
             return new List<Vector3>();
         }
     }
-
+    /// <summary>Returns a list of PathNodes that form a path using A* pathfinding Algorithm from origin XY position to target XY position</summary>
     private List<PathNode> FindPath(int startX, int startY, int endX, int endY)
     {
         if (NullNodeCheck(startX, startY))
