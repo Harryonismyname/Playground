@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Customized 2D GridMap for storing Customized 2D GridNodes</summary>
 public class WorldMap
 {
     public bool debugging = false;
