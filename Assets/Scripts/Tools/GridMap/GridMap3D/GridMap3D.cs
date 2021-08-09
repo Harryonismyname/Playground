@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-// TODO: Create Base 2DGrid Class and then make a 3DGrid class that inherits from 2DGrid.
-// TODO: Clean up the cascading mess that will result from restructuring.
-
+/// <summary>
+/// 3-Dimensional Grid capable of storing custom 3D nodes
+/// </summary>
 public class GridMap3D<TGridObject>
 {
+    ///<summary>Y extreme</summary>
     public int Height { get; }
+    ///<summary>X extreme</summary>
     public int Width { get; }
+    ///<summary>Z extreme</summary>
     public int Depth { get; }
+    ///<summary>Controls grid density</summary>
     public float cellSize;
+    ///<summary>where Grid[0,0,0] is located in 3D space</summary>
     private Vector3 originPosition;
+    ///<summary>Where grid data is stored</summary>
     private TGridObject[,,] gridArray;
     public bool debugging = false;
 
@@ -80,8 +85,6 @@ public class GridMap3D<TGridObject>
         GridTools3D<TGridObject>.GetXYZ(this, worldPosition, out int x, out int y, out int z);
         return GetGridObject(x, y, z);
     }
-
-
     public Vector3 GetCellCenterWorld(Vector3 position)
     {
         GridTools3D<TGridObject>.GetXYZ(this, position, out int x, out int y, out int z);
@@ -93,8 +96,6 @@ public class GridMap3D<TGridObject>
         Vector3 location = GetCellCenter(GetWorldPosition(x, y, z));
         return location;
     }
-
-
     private Vector3 GetCellCenter(Vector3 location)
     {
         location.x += (cellSize / 2);
@@ -102,8 +103,6 @@ public class GridMap3D<TGridObject>
         location.z += (cellSize / 2);
         return location;
     }
-
-
     public Vector3 GetWorldPosition(int x, int y, int z = 0)
     {
         return new Vector3(x, y, z) * cellSize;
