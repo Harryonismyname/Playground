@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>Custom 2D GridNode for storing map tile data</summary>
 public class MapNode : GridNode2D<MapNode>
 {
     private TileType state;
