@@ -45,7 +45,7 @@ public class GameRunner : MonoBehaviour
             }
         }
     }
-
+    // Gets settlement whose turn it is and performs automatic operations on adjacent tiles
     private void Turn()
     {
         Settlement settlement = settlementList[settlementIndex];
@@ -90,7 +90,7 @@ public class GameRunner : MonoBehaviour
         }
 
     }
-
+    // Updates the global onhands of each of the resources
     private void UpdateGlobals()
     {
         globalWood = 0;
