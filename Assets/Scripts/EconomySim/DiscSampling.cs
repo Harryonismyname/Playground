@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public static class DiscSampling
 {
+    /// <summary>Generates a list of points scattered by the area of circle genereted by passed radius</summary>
     public static List<Vector2> GeneratePoints(float radius, Vector2 sampleRegionSize, GridMap2D<MapNode> worldMap, int numSamplesBeforeRejection = 30)
     {
         GridMap2D<MapNode> map = worldMap;
